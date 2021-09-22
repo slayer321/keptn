@@ -31,9 +31,9 @@ func setupLocalMongoDB() (*dockertest.Pool, *dockertest.Resource) {
 	var mongoClient *mongo.Client
 	// pulls an image, creates a container based on it and runs it
 	resource, err := pool.RunWithOptions(&dockertest.RunOptions{
-		Repository: "docker.io/centos/mongodb-36-centos7",
-		Tag:        "1",
-		Env:        []string{"MONGODB_DATABASE=keptn", "MONGODB_PASSWORD=password", "MONGODB_USER=keptn", "MONGODB_ADMIN_PASSWORD=password"},
+		Repository: "docker.io/bitnami/mongodb",
+		Tag:        "4.4.9",
+		Env:        []string{"MONGODB_DATABASE=keptn", "MONGODB_PASSWORD=password", "MONGODB_USERNAME=keptn", "MONGODB_ROOT_USER=admin", "MONGODB_ROOT_PASSWORD=password"},
 		PortBindings: map[docker.Port][]docker.PortBinding{
 			"27017/tcp": {{HostPort: "27017"}}, // this makes the container reachable via localhost:27017 instead of always using a random port
 		},
