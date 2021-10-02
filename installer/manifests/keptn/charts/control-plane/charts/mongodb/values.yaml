@@ -1,5 +1,4 @@
 image:
-  registry: docker.io
   repository: centos/mongodb-36-centos7
   tag: 1
 
