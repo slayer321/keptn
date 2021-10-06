@@ -364,7 +364,6 @@ func sendEvent(event cloudevents.Event) error {
 		log.Println("LOCALLY: Sending Event")
 		return nil
 	}
-
 	keptnHandler, err := keptnv2.NewKeptn(&event, keptncommon.KeptnOpts{})
 
 	if err != nil {
