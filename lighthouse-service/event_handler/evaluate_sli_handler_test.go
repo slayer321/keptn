@@ -1,6 +1,7 @@
 package event_handler
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"github.com/keptn/go-utils/pkg/api/models"
@@ -13,6 +14,7 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -3148,11 +3150,12 @@ func TestEvaluateSLIHandler_getPreviousEvaluations(t *testing.T) {
 }
 
 func TestEvaluateSLIHandler_HandleEvent(t *testing.T) {
+	wg := &sync.WaitGroup{}
+	ctx := cloudevents.WithEncodingStructured(context.WithValue(context.Background(), "Wg", wg))
 	incomingEvent := cloudevents.NewEvent()
 	incomingEvent.SetID("my-id")
 	incomingEvent.SetSource("my-source")
 	incomingEvent.SetExtension("shkeptncontext", "my-context")
-
 	keptn, _ := keptnv2.NewKeptn(&incomingEvent, keptncommon.KeptnOpts{
 		EventSender: &keptnfake.EventSender{},
 	})
@@ -3218,7 +3221,7 @@ func TestEvaluateSLIHandler_HandleEvent(t *testing.T) {
 				SLOFileRetriever: tt.fields.SLOFileRetriever,
 				EventStore:       tt.fields.EventStore,
 			}
-			if err := eh.HandleEvent(); (err != nil) != tt.wantErr {
+			if err := eh.HandleEvent(ctx); (err != nil) != tt.wantErr {
 				t.Errorf("HandleEvent() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
