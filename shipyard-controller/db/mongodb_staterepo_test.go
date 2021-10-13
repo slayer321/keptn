@@ -81,10 +81,10 @@ func shutDownLocalMongoDB(pool *dockertest.Pool, resource *dockertest.Resource) 
 }
 
 func TestMain(m *testing.M) {
-	pool, dbResource := setupLocalMongoDB()
-	code := m.Run()
-	shutDownLocalMongoDB(pool, dbResource)
-	os.Exit(code)
+	//pool, dbResource := setupLocalMongoDB()
+	//code := m.Run()
+	//shutDownLocalMongoDB(pool, dbResource)
+	//os.Exit(code)
 }
 
 func TestMongoDBStateRepo_FindSequenceStates(t *testing.T) {
